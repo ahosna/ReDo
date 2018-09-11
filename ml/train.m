@@ -23,12 +23,12 @@ function plot_xy(X, Y)
 	hold on;
 	trues_idx = find(Y==1);
 	trues = X(trues_idx,:);
-	plot(trues(:,1), trues(:,2), "gx")
+	plot(trues(:,1), trues(:,2), "gx");
 
 	negs_idx = find(Y==0);
-	negs_idx_short = negs_idx(randsample(length(negs_idx), 170),:)
+	negs_idx_short = negs_idx(randsample(length(negs_idx), 170),:);
 	negs = X(negs_idx_short,:);
-	plot(negs(:,1), negs(:,2), "ro")
+	plot(negs(:,1), negs(:,2), "ro");
 	hold off % release figure
 endfunction
 
