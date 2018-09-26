@@ -1,5 +1,13 @@
+// TODO read from flash
+const wifi_pass = "mywifi";
+const wifi_ssid = "mypass";
+const redo_id = "42";
+const api_host = "www.example.com";
+
 I2C1.setup({"scl":D2,"sda":D0,"bitrate":100000});
 var MPU = require("MPU6050").connect(I2C1);
+var Wifi = require("Wifi");
+var Http = require("http");
 var face = 0;
 
 // TODO read classifiers from flash
@@ -50,6 +58,51 @@ function get_face() {
   return classify(xyz_to_X(MPU.getAcceleration()));
 }
 
+function report_face() {
+  payload = "{redoid:" + redo_id + ", face:" + face +"}";
+  api_request_options = {
+    host:api_host,
+    port:80,
+    path: "/api/report",
+    method: "POST",
+    protocol: "http:",
+    headers: {
+      "Accept": "application/json",
+      "Cache-Control": "no-cache",
+      "Content-Type": "application/json",
+      "Content-Length": "" + payload.length
+    }
+  };
+  console.log("report: " + payload);
+  req = Http.request(api_request_options, function(res) {
+      res.on('data', function(data) {
+        console.log("HTTP> " + data);
+      });
+      res.on('close', function(data) {
+        console.log("Connection closed");
+        console.log("Wifi disconnecting");
+        Wifi.disconnect();
+      });
+    });
+  req.on('error', function(err) {
+    console.log("Error: " + err.code + ", msg: " + err.msg);
+  });
+  console.log("Sending");
+  req.end(payload);
+}
+
+function send_to_api() {
+  console.log("Spinning up wifi");
+  Wifi.connect(wifi_ssid, {password:wifi_pass}, function(ap){
+    console.log("Wifi connected:" + ap);
+    Wifi.getIP(function(err, ip){
+      console.log("Ip: " + ip.ip);
+    });
+    console.log("Reporting face");
+    report_face();
+  });
+}
+
 function sample_face(sample, old_face) {
   const NUM_SAMPLES=5;
   new_face = get_face();
@@ -60,10 +113,11 @@ function sample_face(sample, old_face) {
        if (face != new_face) {
          face = new_face;
          console.log("face change: ", face);
+         send_to_api();
        }
     }
   }
 }
 
-setInterval(sample_face, 1000, 0, 0);
+setInterval(sample_face, 60000, 0, 0);
 save();
