@@ -23,3 +23,12 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+migration:
+  adapter: postgresql
+  encoding: unicode
+  database: redo
+  host: localhost
+  pool: 5
+  username: redo_db_master
+  password: <%= ENV.fetch("DB_PASSWORD") { '' } %>
