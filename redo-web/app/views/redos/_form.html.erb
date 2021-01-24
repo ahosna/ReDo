@@ -1,0 +1,32 @@
+<%= form_with(model: redo) do |form| %>
+  <% if redo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(redo.errors.count, "error") %> prohibited this redo from being saved:</h2>
+
+      <ul>
+        <% redo.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :type %>
+    <%= form.text_field :type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :version %>
+    <%= form.text_field :version %>
+  </div>
+
+  <div class="field">
+    <%= form.label :key %>
+    <%= form.text_area :key %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

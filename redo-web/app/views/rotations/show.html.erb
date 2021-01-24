@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Face:</strong>
+  <%= @rotation.face %>
+</p>
+
+<p>
+  <strong>Redo:</strong>
+  <%= @rotation.redo_id %>
+</p>
+
+<%= link_to 'Edit', edit_rotation_path(@rotation) %> |
+<%= link_to 'Back', rotations_path %>
