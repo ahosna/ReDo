@@ -21,8 +21,13 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: redo
+  host: localhost
+  pool: 15
+  username: redo_web
+  password: <%= ENV.fetch("DB_PASSWORD") { '' } %>
 
 migration:
   adapter: postgresql
