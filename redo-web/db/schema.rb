@@ -10,28 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_124800) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2021_01_25_222546) do
 
   create_table "faces", force: :cascade do |t|
     t.text "text"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "redo_id"
+    t.integer "redo_id"
     t.index ["redo_id"], name: "index_faces_on_redo_id"
   end
 
   create_table "redos", force: :cascade do |t|
-    t.integer "type"
+    t.integer "hw_type"
     t.integer "version"
-    t.text "key"
+    t.text "shared_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "redo_id"
-    t.bigint "face_id"
+    t.integer "redo_id"
+    t.integer "face_id"
+    t.string "serial"
     t.index ["face_id"], name: "index_redos_on_face_id"
     t.index ["redo_id"], name: "index_redos_on_redo_id"
   end
