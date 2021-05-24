@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Redo:</strong>
+  <%= @face.redo_id %>
+</p>
+
+<p>
+  <strong>Face:</strong>
+  <%= @face.face_id %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @face.text %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @face.status %>
+</p>
+
+<%= link_to 'Edit', edit_face_path(@face) %> |
+<%= link_to 'Back', faces_path %>

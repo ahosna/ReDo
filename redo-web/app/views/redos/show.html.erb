@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @redo.type %>
+</p>
+
+<p>
+  <strong>Version:</strong>
+  <%= @redo.version %>
+</p>
+
+<p>
+  <strong>Key:</strong>
+  <%= @redo.key %>
+</p>
+
+<%= link_to 'Edit', edit_redo_path(@redo) %> |
+<%= link_to 'Back', redos_path %>

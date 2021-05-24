@@ -1,0 +1,2 @@
+module RedosHelper
+end

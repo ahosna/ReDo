@@ -1,0 +1,2 @@
+class Redo < ApplicationRecord
+end
